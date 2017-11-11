@@ -2,5 +2,17 @@
     <string name="app_name">MedicoAssistant</string>
     <string name="enter_mob_number">Enter your mobile number.</string>
     <string name="register">Register</string>
-    <string name="mobile_num_empty">Mobile number cannot be empty.</string>
+    <string name="login_desc">Enter your mobile number to get started</string>
+    <string name="verification_text">Code</string>
+    <string name="action_sign_in_next">Next</string>
+    <string name="register_desc">Enter your name and address which the item is to be dispatched.</string>
+    <string name="action_register">Continue</string>
+    <string name="edit_str">Edit</string>
+    <string name="confirmation_text_dialog">Is this OK, or would you like to edit this number?</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_email">Please enter a 10 digit phone number</string>
 </resources>
