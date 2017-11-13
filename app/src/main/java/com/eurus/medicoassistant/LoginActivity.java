@@ -68,7 +68,9 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(Utils.pref, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         if (sharedPreferences.contains("uid")) {
-            startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+            return;
         }
         setContentView(R.layout.activity_login);
         mPhoneView = findViewById(R.id.edit_text_phone_number);
