@@ -5,4 +5,7 @@
     <dimen name="image_size">80dp</dimen>
     <dimen name="android_text_size">18sp</dimen>
     <dimen name="otp_width">48dp</dimen>
+
+    <dimen name="chip_padding">8dp</dimen>
+    <dimen name="padding_top">8dp</dimen>
 </resources>

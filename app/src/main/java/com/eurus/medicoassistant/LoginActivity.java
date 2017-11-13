@@ -58,9 +58,12 @@ public class LoginActivity extends AppCompatActivity {
     private boolean otpsent = false;
     private PhoneAuthCredential credential;
     private TextView textView;
-
+    private Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         sharedPreferences = getSharedPreferences(Utils.pref, MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -74,6 +77,16 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressbar);
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference();
+        //Go To Booking Activity
+        btn= findViewById(R.id.goToBookingButton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(LoginActivity.this, BookAppontment.class);
+                startActivity(i);
+            }
+        });
+        //end-Go To Booking Activity
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
