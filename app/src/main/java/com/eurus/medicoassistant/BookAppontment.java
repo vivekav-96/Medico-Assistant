@@ -26,15 +26,19 @@ public class BookAppontment extends AppCompatActivity {
     private TextView eveningSelectTV;
     View.OnClickListener changeColorOfTime;
 
-    Drawable drawable_default, drawable_selected;
+    Drawable drawable_default, drawable_selected, drawable_default_small, drawable_selected_small;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_appontment);
         current_selected_slot=current_selected_time=null;
+
         drawable_default=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_default);
         drawable_selected=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_selected);
+        drawable_default_small=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_default_small);
+        drawable_selected_small=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_selected_small);
+
         changeColorOfTime=new View.OnClickListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -42,7 +46,8 @@ public class BookAppontment extends AppCompatActivity {
             public void onClick(View view) {
                 if(current_selected_time==(TextView) view)
                 {
-                   view.setBackground(drawable_default);
+                    view.setBackground(drawable_default);
+                    current_selected_time=null;
                 }
                 else
                 {
@@ -52,16 +57,15 @@ public class BookAppontment extends AppCompatActivity {
                         current_selected_time.setBackground(drawable_default);
 
                     }
+                    current_selected_time=(TextView) view;
                 }
-                current_selected_time=(TextView) view;
+
             }
         };
         morningSelectTV=findViewById(R.id.morningSelectChip);
         eveningSelectTV=findViewById(R.id.eveningSelectChip);
         morningSelectTV.setOnClickListener(changeColorOfTime);
         eveningSelectTV.setOnClickListener(changeColorOfTime);
-
-
 
 
         //Addding data to ArrayList
@@ -78,12 +82,12 @@ public class BookAppontment extends AppCompatActivity {
         dataset.add("11:15 AM");
         dataset.add("11:30 AM");
         dataset.add("11:45 AM");
-        //end-Addding data to ArrayList
+        //end-Adding data to ArrayList
         timeSlotRV=(RecyclerView)findViewById(R.id.timeSlotRV);
         timeSlotRV_layoutManager = new LinearLayoutManager(BookAppontment.this, LinearLayoutManager.HORIZONTAL, false);
         timeSlotRV.setLayoutManager(timeSlotRV_layoutManager);
 
-        timeSlotRV_adapter=new TimeSlotRVAdapter(dataset);
+        timeSlotRV_adapter=new TimeSlotRVAdapter(dataset, drawable_default_small, drawable_selected_small);
         timeSlotRV.setAdapter(timeSlotRV_adapter);
 
 
