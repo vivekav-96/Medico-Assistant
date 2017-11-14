@@ -11,11 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by Kay on 11/13/2017.
- */
-
-class TimeSlotRVAdapter extends RecyclerView.Adapter<TimeSlotRVAdapter.ViewHolder> {
+public class TimeSlotRVAdapter extends RecyclerView.Adapter<TimeSlotRVAdapter.ViewHolder> {
 
 
     private ArrayList<String> dataset;
@@ -23,12 +19,9 @@ class TimeSlotRVAdapter extends RecyclerView.Adapter<TimeSlotRVAdapter.ViewHolde
     private Drawable drawable_default;
     private Drawable drawable_selected;
     private TextView current_selected;
-    private String selectedSlot=null;
+    public String selectedSlot=null;
 
-
-
-
-    public TimeSlotRVAdapter(ArrayList<String> dataset, Drawable drawable_default, Drawable drawable_selected) {
+     TimeSlotRVAdapter(ArrayList<String> dataset, Drawable drawable_default, Drawable drawable_selected) {
         this.dataset=dataset;
         this.drawable_default=drawable_default;
         this.drawable_selected=drawable_selected;
@@ -65,6 +58,7 @@ class TimeSlotRVAdapter extends RecyclerView.Adapter<TimeSlotRVAdapter.ViewHolde
                     }
                     current_selected=t_current;
                     selectedSlot=current_selected.getText().toString();
+                    BookAppointment.selectedTimeSlot=selectedSlot;
                 }
 
             }
@@ -81,6 +75,7 @@ class TimeSlotRVAdapter extends RecyclerView.Adapter<TimeSlotRVAdapter.ViewHolde
         {
             holder.timeSlotTV.setBackground(drawable_selected);
             current_selected=holder.timeSlotTV;
+
         }
 
 
@@ -101,4 +96,6 @@ class TimeSlotRVAdapter extends RecyclerView.Adapter<TimeSlotRVAdapter.ViewHolde
             timeSlotTV= itemView.findViewById(R.id.timeSlotTV);
         }
     }
+
+
 }

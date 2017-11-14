@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,10 +19,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BookAppointment extends AppCompatActivity {
+
+    private FirebaseDatabase firebase;
+    private DatabaseReference ref;
 
     private RecyclerView timeSlotRV;
     private RecyclerView.Adapter timeSlotRV_adapter;
@@ -47,6 +59,7 @@ public class BookAppointment extends AppCompatActivity {
     private View.OnClickListener changeColorOfTime;
 
     private String selected_slot_time_of_day=null, selected_slot_time=null;
+    public static String selectedTimeSlot;
 
     private Drawable drawable_default, drawable_selected, drawable_default_small, drawable_selected_small;
 
@@ -70,7 +83,6 @@ public class BookAppointment extends AppCompatActivity {
             flag++;
         }
 
-        Toast.makeText(this, dateTV.getText(), Toast.LENGTH_LONG).show();
         if(dateTV.getText().toString().equals("Date"))
         {
             pickADateTV.requestFocus();
@@ -111,6 +123,7 @@ public class BookAppointment extends AppCompatActivity {
         {
             DatePickerDialog dp_diag=new DatePickerDialog(this, onDateSet, year_x, month_x, day_x);
             dp_diag.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+            dp_diag.getDatePicker().setMaxDate(System.currentTimeMillis()+604800000);
             return dp_diag;
         }
         return null;
@@ -122,6 +135,9 @@ public class BookAppointment extends AppCompatActivity {
         setContentView(R.layout.activity_book_appontment);
         current_selected_slot=current_selected_time=null;
 
+        //Firebase instance initialization
+        firebase=FirebaseDatabase.getInstance();
+        ref=firebase.getReference();
         //Instances of Drawables to be used for chip design
         drawable_default=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_default);
         drawable_selected=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_selected);
@@ -210,9 +226,14 @@ public class BookAppointment extends AppCompatActivity {
         confirmBookingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateEntries()==true)
+
+                if(validateEntries())
                 {
                     //confirm booking, update database
+
+
+
+
                 }
             }
         });
