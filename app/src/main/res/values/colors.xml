@@ -7,4 +7,5 @@
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="chipSelected">#FFB74D</color>
+    <color name="off_black">#898989</color>
 </resources>

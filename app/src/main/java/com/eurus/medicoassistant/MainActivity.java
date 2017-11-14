@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         fab_book_app.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,BookAppontment.class);
+                Intent i = new Intent(MainActivity.this,BookAppointment.class);
                 startActivity(i);
             }
         });
