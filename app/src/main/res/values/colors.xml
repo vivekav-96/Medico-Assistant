@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#7654c4</color>
-    <color name="colorPrimaryDark">#6f33b4</color>
-    <color name="colorAccent">#FFE75C</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="chipSelected">#FFB74D</color>
     <color name="off_black">#898989</color>
+    <color name="colorPrimary">#5bc0de</color>
+    <color name="colorPrimaryDark">#46b8da</color>
+    <color name="colorAccent">#009a9a</color>
+
+    <color name="main_colour_green_dark">#4cae4c</color>
+    <color name="main_colour_blue">#337ab7</color>
+    <color name="main_colour_blue_dark">#2e6da4</color>
+    <color name="main_colour_light_blue">#5bc0de</color>
+    <color name="main_colour_light_blue_dark">#46b8da</color>
+    <color name="main_colour_orange">#f0ad4e</color>
+    <color name="main_colour_orange_dark">#eea236</color>
+    <color name="main_colour_red">#d9534f</color>
+    <color name="main_colour_red_dark">#d43f3a</color>
 </resources>

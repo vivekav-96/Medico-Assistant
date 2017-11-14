@@ -30,7 +30,6 @@ repositories {
 dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:cardview-v7:26.1.0'
-    compile 'com.sothree.slidinguppanel:library:3.4.0'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -44,6 +43,7 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:11.6.0'
     compile 'com.github.stfalcon:smsverifycatcher:0.3.1'
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
+    compile 'com.roughike:bottom-bar:2.3.1'
 
 }
 apply plugin: 'com.google.gms.google-services'

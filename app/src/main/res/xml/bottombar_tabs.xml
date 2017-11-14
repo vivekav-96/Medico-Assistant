@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_list1"
+        icon="@drawable/tick"
+        title="Appointments"
+        barColorWhenSelected="@color/main_colour_blue_dark" />
+    <tab
+        id="@+id/tab_list2"
+        icon="@drawable/tick"
+        title="Doctors"
+        barColorWhenSelected="@color/main_colour_orange_dark" />
+</tabs>
