@@ -19,4 +19,9 @@
     <color name="main_colour_orange_dark">#eea236</color>
     <color name="main_colour_red">#d9534f</color>
     <color name="main_colour_red_dark">#d43f3a</color>
+	
+	<color name="off_black_1">#4d4b4b</color>
+	<color name="line">#292929</color>
+	<color name="dateBlue">#8e6bdf</color>
+	<color name="dateRed">#ab2327</color>
 </resources>
