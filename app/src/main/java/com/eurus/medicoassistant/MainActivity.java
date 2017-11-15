@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Medico-Assistant");
+        BottomBar bottomBar = findViewById(R.id.bottomBar);
         fab_book_app = findViewById(R.id.fab_action);
         fab_book_app.setOnClickListener(new View.OnClickListener() {
             @Override

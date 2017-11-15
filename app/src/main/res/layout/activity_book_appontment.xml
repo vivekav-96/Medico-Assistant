@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/main_colour_blue_dark"
         android:theme="@style/ToolBarStyle"/>
 
 
@@ -143,7 +143,7 @@
         android:id="@+id/submit_appointment_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/main_colour_blue_dark"
         android:text="SUBMIT APPOINTMENT"
         android:textColor="@color/white"
         android:visibility="gone"

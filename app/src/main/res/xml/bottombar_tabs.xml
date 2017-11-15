@@ -2,12 +2,12 @@
 <tabs>
     <tab
         id="@+id/tab_list1"
-        icon="@drawable/tick"
+        icon="@drawable/appoinment_icon"
         title="Appointments"
         barColorWhenSelected="@color/main_colour_blue_dark" />
     <tab
         id="@+id/tab_list2"
-        icon="@drawable/tick"
+        icon="@drawable/doctor_icon"
         title="Doctors"
-        barColorWhenSelected="@color/main_colour_orange_dark" />
+        barColorWhenSelected="@color/main_colour_blue_dark" />
 </tabs>
