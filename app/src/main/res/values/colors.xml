@@ -5,8 +5,9 @@
     <color name="transparent">#00000000</color>
     <color name="chipSelected">#FFB74D</color>
     <color name="off_black">#898989</color>
-    <color name="colorPrimary">#5bc0de</color>
-    <color name="colorPrimaryDark">#46b8da</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="colorPrimary">#1f4e81</color>
+    <color name="colorPrimaryDark">#183d64</color>
     <color name="colorAccent">#009a9a</color>
 
     <color name="main_colour_green_dark">#4cae4c</color>

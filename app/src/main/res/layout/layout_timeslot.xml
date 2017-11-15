@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    >
 
     <TextView
         android:id="@+id/timeSlotTV"
@@ -11,11 +13,17 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
-        android:background="@drawable/shape_chip_simple_drawable_default"
-        android:text=""
+        android:background="@drawable/shape_chip_simple_drawable_selected"
+        android:text="9:00"
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="20dp"
         android:textColor="@color/black"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="14dp" />
+        tools:layout_editor_absoluteY="14dp"
+        android:layout_gravity="center"
+        android:gravity="center"/>
 
 
 </LinearLayout>

@@ -1,21 +1,20 @@
 package com.eurus.medicoassistant;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.Spinner;
+import android.widget.CalendarView;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,223 +24,210 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class BookAppointment extends AppCompatActivity {
+public class BookAppointment extends AppCompatActivity implements RadioButton.OnClickListener{
 
-    private FirebaseDatabase firebase;
-    private DatabaseReference ref;
+    private DatabaseReference mRef;
+    private CalendarView calendarView;
+    private RadioButton morning,evening;
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private TimeSlotRVAdapter adapter;
+    List<String> slotList = new ArrayList<>();
+    String selected_date_str;
+    ProgressBar progressBar;
+    Button submit;
+    TextView empty_text;
+    String selected = "",uid;
 
-    private RecyclerView timeSlotRV;
-    private RecyclerView.Adapter timeSlotRV_adapter;
-    private RecyclerView.LayoutManager timeSlotRV_layoutManager;
-
-    private ArrayList<String> dataset;
-
-    private TextView current_selected_time;
-    private TextView current_selected_slot;
-    private TextView morningSelectTV;
-    private TextView eveningSelectTV;
-    private TextView dateTV;
-    private TextView pickADoctorTV;
-    private TextView pickADateTV;
-    private TextView pickASlotTV;
-
-    private Button confirmBookingButton;
-    private Spinner doctorSpinner;
-
-    final int DIAG_ID=0;
-    private int year_x, month_x, day_x;
-
-    private View.OnClickListener changeColorOfTime;
-
-    private String selected_slot_time_of_day=null, selected_slot_time=null;
-    public static String selectedTimeSlot;
-
-    private Drawable drawable_default, drawable_selected, drawable_default_small, drawable_selected_small;
-
-   private  Animation animation;
-
-
-    private boolean validateEntries()
-    {
-
-        int doctorSpinnerSelectedIndex=0;
-        String doctor;
-        String slot_time_of_day;
-        String slot_time;
-        int flag=0;
-
-
-        if(doctorSpinnerSelectedIndex==0)
-        {
-            pickADoctorTV.requestFocus();
-            pickADoctorTV.startAnimation(animation);
-            flag++;
-        }
-
-        if(dateTV.getText().toString().equals("Date"))
-        {
-            pickADateTV.requestFocus();
-            pickADateTV.startAnimation(animation);
-            flag++;
-        }
-
-        if(selected_slot_time_of_day==null || selected_slot_time==null)
-        {
-            pickASlotTV.requestFocus();
-            pickASlotTV.startAnimation(animation);
-            flag++;
-        }
-
-        if(flag!=0)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    public DatePickerDialog.OnDateSetListener onDateSet=
-            new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                    year_x=i;
-                    month_x=i1;
-                    day_x=i2;
-                    dateTV.setText(day_x+"/"+month_x+"/"+year_x);
-                }
-            };
-
-    @Override
-    protected Dialog onCreateDialog(int id)
-    {
-        if(id==DIAG_ID)
-        {
-            DatePickerDialog dp_diag=new DatePickerDialog(this, onDateSet, year_x, month_x, day_x);
-            dp_diag.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
-            dp_diag.getDatePicker().setMaxDate(System.currentTimeMillis()+604800000);
-            return dp_diag;
-        }
-        return null;
-    }
-
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_appontment);
-        current_selected_slot=current_selected_time=null;
-
-        //Firebase instance initialization
-        firebase=FirebaseDatabase.getInstance();
-        ref=firebase.getReference();
-        //Instances of Drawables to be used for chip design
-        drawable_default=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_default);
-        drawable_selected=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_selected);
-        drawable_default_small=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_default_small);
-        drawable_selected_small=this.getResources().getDrawable(R.drawable.shape_chip_simple_drawable_selected_small);
-
-
-        //Animation
-        animation = AnimationUtils.loadAnimation(this, R.anim.shake);
-
-        //Datepicker
-        Calendar calendar=Calendar.getInstance();
-        year_x=calendar.get(Calendar.YEAR);
-        month_x=calendar.get(Calendar.MONTH);
-        day_x=calendar.get(Calendar.DAY_OF_MONTH);
-
-        dateTV=findViewById(R.id.dateTV);
-        dateTV.setOnClickListener(new View.OnClickListener() {
+        sharedPreferences = getSharedPreferences(Utils.pref, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        uid = sharedPreferences.getString("uid","");
+        mRef = FirebaseDatabase.getInstance().getReference();
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Jennifer Wong");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        calendarView = findViewById(R.id.calenderView);
+        recyclerView = findViewById(R.id.recyclerView);
+        morning = findViewById(R.id.morning_radiobtn);
+        evening = findViewById(R.id.evening_radtobtn);
+        progressBar = findViewById(R.id.progressbar);
+        empty_text = findViewById(R.id.empty_text);
+        submit = findViewById(R.id.submit_appointment_btn);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onClick(View view) {
-                showDialog(DIAG_ID);
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                selected_date_str = dayOfMonth + "-" + (month+1) + "-" + year;
+                loadInitalData();
             }
         });
-        pickADoctorTV =findViewById(R.id.pickADocTextView);
-        pickADateTV =findViewById(R.id.pickADateTextView);
-        pickASlotTV =findViewById(R.id.pickASlotTextView);
 
-        changeColorOfTime=new View.OnClickListener() {
-
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        int numberOfColumns = 3;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        adapter = new TimeSlotRVAdapter(slotList,selected);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                if(current_selected_time==(TextView) view)
-                {
-                    view.setBackground(drawable_default);
-                    current_selected_time=null;
-                    selected_slot_time_of_day=null;
-                }
+            public void onItemClick(View view, int position) {
+                selected = adapter.selected = slotList.get(position);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        }));
+
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendarView.setDate(calendar.getTimeInMillis(),false,true);
+        calendarView.setMinDate(calendar.getTimeInMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        selected_date_str = sdf.format(date);
+
+        morning.setChecked(true);
+        loadInitalData();
+        int noOfDays = 14;
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+        calendarView.setMaxDate(calendar.getTimeInMillis());
+        morning.setOnClickListener(this);
+        evening.setOnClickListener(this);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(selected.equals(""))
+                    Toast.makeText(getApplicationContext(),"Select a time slot",Toast.LENGTH_LONG).show();
                 else
                 {
-                    view.setBackground(drawable_selected);
-
-                    if(current_selected_time!=null)
-                    {
-                        current_selected_time.setBackground(drawable_default);
-
-                    }
-                    current_selected_time=(TextView) view;
-                    selected_slot_time_of_day=current_selected_time.getText().toString();
-                }
-
-            }
-        };
-        morningSelectTV=findViewById(R.id.morningSelectChip);
-        eveningSelectTV=findViewById(R.id.eveningSelectChip);
-        morningSelectTV.setOnClickListener(changeColorOfTime);
-        eveningSelectTV.setOnClickListener(changeColorOfTime);
-
-
-        //Addding data to ArrayList
-        dataset=new ArrayList<String>();
-        dataset.add("9:00 AM");
-        dataset.add("9:15 AM");
-        dataset.add("9:30 AM");
-        dataset.add("9:45 AM");
-        dataset.add("10:00 AM");
-        dataset.add("10:15 AM");
-        dataset.add("10:30 AM");
-        dataset.add("10:45 AM");
-        dataset.add("11:00 AM");
-        dataset.add("11:15 AM");
-        dataset.add("11:30 AM");
-        dataset.add("11:45 AM");
-        //end-Adding data to ArrayList
-        timeSlotRV=(RecyclerView)findViewById(R.id.timeSlotRV);
-        timeSlotRV_layoutManager = new LinearLayoutManager(BookAppointment.this, LinearLayoutManager.HORIZONTAL, false);
-        timeSlotRV.setLayoutManager(timeSlotRV_layoutManager);
-
-        timeSlotRV_adapter=new TimeSlotRVAdapter(dataset, drawable_default_small, drawable_selected_small);
-        timeSlotRV.setAdapter(timeSlotRV_adapter);
-
-        doctorSpinner=findViewById(R.id.doctorsListSpinner);
-
-        //Confirm Booking
-        confirmBookingButton=findViewById(R.id.confirmBookingButton);
-        confirmBookingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(validateEntries())
-                {
-                    //confirm booking, update database
-
-
-
-
+                    final Dialog dialog = new Dialog(BookAppointment.this);
+                    dialog.setContentView(R.layout.dialog_submit_appointment);
+                    final TextView name = dialog.findViewById(R.id.name_textview_dialog);
+                    TextView line = dialog.findViewById(R.id.nextLine);
+                    Button ok = dialog.findViewById(R.id.btn_ok_dialog);
+                    Button cancel = dialog.findViewById(R.id.btn_cancel_dialog);
+                    dialog.show();
+                    final String doctor_name = toolbar.getTitle().toString();
+                    name.setText(doctor_name);
+                    final String batch = morning.isChecked()? "Morning" : "Evening" ;
+                    line.setText(selected_date_str + " " + batch + " " + selected);
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            final ProgressDialog progressDialog = new ProgressDialog(BookAppointment.this);
+                            progressDialog.setTitle("Booking an Appointment");
+                            progressDialog.setMessage("This will only take a sec..");
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
+                            Map<String,String> map = new HashMap<>();
+                            map.put("Date",selected_date_str);
+                            map.put("Time Slot",selected);
+                            map.put("Doctor",doctor_name);
+                            map.put("Time of Day",batch);
+                            mRef.child("Appointments").child(uid).push().setValue(map , new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    mRef.child("Booked Slots").child(doctor_name).child(selected_date_str).child(batch).child(selected).setValue(true);
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(),"Successfully Booked",Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            });
+                        }
+                    });
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
                 }
             }
         });
+    }
 
 
-
+    private void loadSlots(DataSnapshot dataSnapshot) {
+        slotList.clear();
+        if(morning.isChecked())
+            slotList.addAll(Utils.morningSlots);
+        else
+            slotList.addAll(Utils.eveningSlots);
+        for(DataSnapshot postSnapshot : dataSnapshot.getChildren())
+        {
+            String slot = postSnapshot.getKey();
+            if(postSnapshot.getValue(Boolean.class)) {
+                slotList.remove(slot);
+            }
+        }
+        progressBar.setVisibility(View.GONE);
+        if(slotList.size()!=0) {
+            adapter.notifyDataSetChanged();
+            recyclerView.setVisibility(View.VISIBLE);
+            submit.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            empty_text.setVisibility(View.VISIBLE);
+        }
     }
 
 
 
+    public void loadInitalData()
+    {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        empty_text.setVisibility(View.GONE);
+        String batch = morning.isChecked()? "Morning" : "Evening" ;
+        Log.d("Date","Available Slots/Jennifer Wong/" + selected_date_str + batch);
+
+        mRef.child("Booked Slots").child("Jennifer Wong").child(selected_date_str).child(batch).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("DS",dataSnapshot.toString());
+                loadSlots(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                progressBar.setVisibility(View.GONE);
+                submit.setVisibility(View.GONE);
+                empty_text.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d("RBCLick",String.valueOf(v.getId()));
+        switch (v.getId())
+        {
+            case R.id.morning_radiobtn:
+                evening.setChecked(false);
+                break;
+            case R.id.evening_radtobtn:
+                morning.setChecked(false);
+                break;
+        }
+        loadInitalData();
+    }
 }

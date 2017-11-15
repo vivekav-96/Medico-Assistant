@@ -7,11 +7,6 @@
         android:startColor="@color/colorAccent"
         android:angle="90"/>-->
 
-    <padding
-        android:bottom="@dimen/chip_padding"
-        android:left="@dimen/chip_padding"
-        android:right="@dimen/chip_padding"
-        android:top="@dimen/chip_padding" />
-    <stroke android:width="4px" android:color="#00bfff"/>
-    <corners android:radius="30dp" />
+    <stroke android:width="4px" android:color="@color/colorPrimary"/>
+    <corners android:radius="10dp" />
 </shape>

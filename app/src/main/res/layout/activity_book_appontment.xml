@@ -6,154 +6,150 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/pickADocTextView"
-        android:layout_width="112dp"
-        android:layout_height="38dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="76dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="2dp"
-        android:paddingTop="5dp"
-        android:text="Pick a Doctor"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/doctorsListSpinner"
-        android:layout_width="225dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="76dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pickADocTextView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/pickADateTextView"
-        android:layout_width="120dp"
-        android:layout_height="41dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="2dp"
-        android:paddingTop="5dp"
-        android:text="Pick a Date"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickADocTextView" />
-
-    <TextView
-        android:id="@+id/dateTV"
-        android:layout_width="232dp"
-        android:layout_height="37dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:text="Date"
-        android:textColor="@color/off_black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pickADateTextView"
-        app:layout_constraintTop_toBottomOf="@+id/doctorsListSpinner" />
-
-    <TextView
-        android:id="@+id/morningSelectChip"
-        android:layout_width="153dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shape_chip_simple_drawable_default"
-        android:padding="8dp"
-        android:text="Morning"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/eveningSelectChip"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickASlotTextView"
-        android:layout_marginRight="8dp" />
-
-    <TextView
-        android:id="@+id/pickASlotTextView"
-        android:layout_width="112dp"
-        android:layout_height="29dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="40dp"
-        android:text="Pick a Slot"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickADateTextView" />
-
-    <RelativeLayout
-        android:id="@+id/timeSlotLister"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/morningSelectChip">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ToolBarStyle"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/timeSlotRV"
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
-    </RelativeLayout>
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/morning_radiobtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Morning"
+                app:layout_constraintEnd_toStartOf="@+id/evening_radtobtn"
+                app:layout_constraintTop_toBottomOf="@+id/pickASlotTextView" />
+
+            <RadioButton
+                android:id="@+id/evening_radtobtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:text="Evening"
+                app:layout_constraintBaseline_toBaselineOf="@id/morning_radiobtn"
+                app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+            <TextView
+                android:id="@+id/pickDateText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Pick a Date"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <CalendarView
+                android:id="@+id/calenderView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/pickDateText" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/grey"
+                app:layout_constraintTop_toBottomOf="@+id/calenderView"/>
+            <TextView
+                android:id="@+id/pickASlotTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Pick a Slot"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                style="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/evening_radtobtn" />
+
+            <TextView
+                android:id="@+id/empty_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="No slots available"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/evening_radtobtn" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:paddingBottom="120dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/evening_radtobtn" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
     <Button
-        android:id="@+id/confirmBookingButton"
-        android:layout_width="192dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="28dp"
-        android:text="Confirm Booking"
+        android:id="@+id/submit_appointment_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="SUBMIT APPOINTMENT"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeSlotLister" />
-
-    <TextView
-        android:id="@+id/eveningSelectChip"
-        android:layout_width="152dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shape_chip_simple_drawable_default"
-        android:padding="8dp"
-        android:text="Evening"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/morningSelectChip"
-        app:layout_constraintTop_toBottomOf="@+id/pickASlotTextView"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="19dp" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
