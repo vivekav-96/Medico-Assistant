@@ -24,4 +24,5 @@
 	<color name="line">#292929</color>
 	<color name="dateBlue">#8e6bdf</color>
 	<color name="dateRed">#ab2327</color>
+    <color name="specialityRed.">#62181a</color>
 </resources>

@@ -19,10 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".BookAppointment"
-            android:parentActivityName=".MainActivity">
-            
-        </activity>
+        <activity
+            android:name=".BookAppointment"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
