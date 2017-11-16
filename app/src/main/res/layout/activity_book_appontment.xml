@@ -15,7 +15,7 @@
         android:theme="@style/ToolBarStyle"/>
 
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,8 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
 
             <RadioButton
                 android:id="@+id/morning_radiobtn"
@@ -137,7 +138,7 @@
 
 
         </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <Button
         android:id="@+id/submit_appointment_btn"

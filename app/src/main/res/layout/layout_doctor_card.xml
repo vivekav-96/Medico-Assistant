@@ -51,7 +51,7 @@
                 android:layout_height="104dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/johnOliver"
+                android:src="@drawable/john_oliver"
                 app:civ_border_color="@color/black"
                 app:civ_border_width="2dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"

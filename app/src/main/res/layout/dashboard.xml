@@ -24,9 +24,9 @@
         </android.support.design.widget.AppBarLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_action"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:backgroundTint="@color/main_colour_blue_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/main_colour_blue_dark"
         android:layout_margin="5dp"
         android:src="@drawable/ic_add_btn"
         android:layout_gravity="bottom|end"/>

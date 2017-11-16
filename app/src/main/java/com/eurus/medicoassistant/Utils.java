@@ -1,6 +1,7 @@
 package com.eurus.medicoassistant;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,4 +43,12 @@ public class Utils {
             add("05:45 PM");
         }
     };
+
+    public static Date addMinutesToDate(int minutes, Date beforeTime){
+        final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
+
+        long curTimeInMs = beforeTime.getTime();
+        Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
+        return afterAddingMins;
+    }
 }
