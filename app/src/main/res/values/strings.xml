@@ -15,4 +15,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_email">Please enter a 10 digit phone number</string>
+    <string name="title_activity_doctor_list">DoctorList</string>
+    <string name="title_activity_home">Home</string>
 </resources>

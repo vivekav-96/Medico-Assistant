@@ -25,4 +25,8 @@
 	<color name="dateBlue">#8e6bdf</color>
 	<color name="dateRed">#ab2327</color>
     <color name="specialityRed.">#62181a</color>
+    <color name="lightBlueBackground">#9396f4</color>
+    <color name="home_daysLeft">#1c055c</color>
+    <color name="next_appointmentText">#4f2707</color>
+    <color name="next_appointment_days_TV">#010106</color>
 </resources>
