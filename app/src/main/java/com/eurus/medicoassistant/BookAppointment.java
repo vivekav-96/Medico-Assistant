@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -78,7 +80,8 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
 
     GoogleAccountCredential mCredential;
     ProgressDialog mProgress;
-
+    Date current_datetime;
+    SimpleDateFormat hour_minute_format;
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
@@ -90,10 +93,15 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     static final long FIFTEEN_MINUTE_IN_MILLIS=900000;//millisecs
+    boolean isCalenderSelectedAsFirst = true;
+    private String current_date_str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.white));
+        }
         setContentView(R.layout.activity_book_appontment);
         sharedPreferences = getSharedPreferences(Utils.pref, MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -114,6 +122,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 selected_date_str = dayOfMonth + "-" + (month + 1) + "-" + year;
+                isCalenderSelectedAsFirst = current_date_str.equals(selected_date_str);
                 loadInitalData();
             }
         });
@@ -137,12 +146,18 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         }));
 
         Date date = new Date();
+        try {
+            hour_minute_format = new SimpleDateFormat("hh:mm a");
+            current_datetime = hour_minute_format.parse(hour_minute_format.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendarView.setDate(calendar.getTimeInMillis(), false, true);
         calendarView.setMinDate(calendar.getTimeInMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        selected_date_str = sdf.format(date);
+        current_date_str = selected_date_str = sdf.format(date);
 
         morning.setChecked(true);
         loadInitalData();
@@ -215,6 +230,8 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
             slotList.addAll(Utils.morningSlots);
         else
             slotList.addAll(Utils.eveningSlots);
+
+        checkforValidSlots(slotList);
         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
             String slot = postSnapshot.getKey();
             if (postSnapshot.getValue(Boolean.class)) {
@@ -228,6 +245,34 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
             submit.setVisibility(View.VISIBLE);
         } else {
             empty_text.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void checkforValidSlots(List<String> slotList) {
+
+        for(Iterator<String> it = slotList.iterator(); it.hasNext();) {
+            String slot = it.next();
+            if (isCalenderSelectedAsFirst) {
+                if (!isValidSlot(slot)) {
+                    it.remove();
+                }
+            }
+        }
+    }
+
+
+    private boolean isValidSlot(String slot) {
+        try {
+            Date date = hour_minute_format.parse(slot);
+            Log.d("DATE_CUR",current_datetime.toString());
+            Log.d("DATE_SLOT",date.toString());
+            Log.d("RESULT",date.after(current_datetime)+"");
+            return date.after(current_datetime);
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -438,18 +483,20 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
             final String batch = morning.isChecked() ? "Morning" : "Evening";
             Event event = new Event()
                     .setSummary("Doctor's appointment with " + toolbar.getTitle())
-                    .setDescription("You have booked an appointment with " + toolbar.getTitle() + "on " + selected_date_str + " " +  selected);
+                    .setDescription("You have booked an appointment with " + toolbar.getTitle() + " on " + selected_date_str + " " +  selected);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
             Date startDate = sdf.parse(selected_date_str + " " + selected);
             DateTime startDateTime = new DateTime(startDate);
             EventDateTime start = new EventDateTime()
-                    .setDateTime(startDateTime);
+                    .setDateTime(startDateTime)
+                    .setTimeZone("Asia/Calcutta");
             event.setStart(start);
 
             Date end_date = Utils.addMinutesToDate(15,startDate);
             DateTime endDateTime = new DateTime(end_date);
             EventDateTime end = new EventDateTime()
-                    .setDateTime(endDateTime);
+                    .setDateTime(endDateTime)
+                    .setTimeZone("Asia/Calcutta");
             event.setEnd(end);
 
             String calendarId = "primary";

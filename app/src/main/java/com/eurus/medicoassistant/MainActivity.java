@@ -22,24 +22,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Medico-Assistant");
-        BottomBar bottomBar = findViewById(R.id.bottomBar);
         fab_book_app = findViewById(R.id.fab_action);
         fab_book_app.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this,BookAppointment.class);
                 startActivity(i);
-            }
-        });
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-                if (tabId == R.id.tab_list1) {
-                    // The tab with id R.id.tab_favorites was selected,
-                    // change your content accordingly.
-                }
-                else if(tabId == R.id.tab_list2){
-                }
             }
         });
     }

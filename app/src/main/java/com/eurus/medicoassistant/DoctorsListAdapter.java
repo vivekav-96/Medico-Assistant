@@ -76,8 +76,6 @@ public class DoctorsListAdapter extends BaseAdapter{
         specialityTV.setText(temp.getSpeciality());
         emailTV.setText(temp.getEmail());
         Glide.with(context).load(temp.getImgurl()).into(displayPicField);
-
-
         return view;
     }
 }
