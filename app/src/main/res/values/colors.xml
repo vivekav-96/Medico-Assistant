@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="chipSelected">#FFB74D</color>
@@ -29,4 +29,8 @@
     <color name="home_daysLeft">#1c055c</color>
     <color name="next_appointmentText">#4f2707</color>
     <color name="next_appointment_days_TV">#010106</color>
+    <color name="ligtGray">#9addd2</color>
+    <color name="cdocCardBg">#ddf1ed</color>
+    <color name="docCardBg">#ddf1ed</color>
+    <color name="ligtGrey">#9addd2</color>
 </resources>

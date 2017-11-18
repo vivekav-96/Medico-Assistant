@@ -32,9 +32,8 @@
             <RadioButton
                 android:id="@+id/morning_radiobtn"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="Morning"
@@ -44,8 +43,7 @@
             <RadioButton
                 android:id="@+id/evening_radtobtn"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_height="38dp"
                 android:layout_marginStart="16dp"
                 android:text="Evening"
                 app:layout_constraintBaseline_toBaselineOf="@id/morning_radiobtn"

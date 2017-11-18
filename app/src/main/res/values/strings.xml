@@ -18,6 +18,7 @@
     <string name="error_invalid_email">Please enter a 10 digit phone number</string>
     <string name="title_activity_doctor_list">DoctorList</string>
     <string name="title_activity_home">Home</string>
+    <string name="title_activity_prescription_list">PrescriptionList</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="upcoming">Upcoming</string>
     <string name="history">History</string>

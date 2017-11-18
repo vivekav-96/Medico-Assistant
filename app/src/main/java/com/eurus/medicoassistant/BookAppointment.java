@@ -186,7 +186,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
                         public void onClick(View v) {
                             dialog.dismiss();
                             mProgress = new ProgressDialog(BookAppointment.this);
-                            mProgress.setTitle("Booking an Appointment");
+                            mProgress.setTitle("Booking an com.eurus.medicoassistant.Appointment");
                             mProgress.setMessage("This will only take a sec..");
                             mProgress.setCancelable(false);
                             mProgress.show();
