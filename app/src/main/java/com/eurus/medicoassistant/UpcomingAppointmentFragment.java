@@ -61,7 +61,7 @@ public class UpcomingAppointmentFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressbar);
         empty_appointments = view.findViewById(R.id.empty_appointments_text);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AppointmentsListAdapter(appointments,AppointmentsListAdapter.APPOINTMENT_UPCOMING);
+        adapter = new AppointmentsListAdapter(appointments,AppointmentsListAdapter.APPOINTMENT_UPCOMING,getActivity(),uid);
         recyclerView.setAdapter(adapter);
         current_datetime = new Date();
         hour_minute_format = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
