@@ -10,8 +10,10 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/text_default"
@@ -109,31 +111,29 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="11sp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appointment_history"
                 android:layout_marginLeft="40dp" />
 
             <ImageView
                 android:id="@+id/new_appointment"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/appointment_history"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/add_icon"
-                android:layout_marginRight="40dp"
-                android:layout_marginLeft="8dp" />
+                app:srcCompat="@drawable/add_icon" />
 
             <ImageView
-                android:id="@+id/appointment_history"
+                android:id="@+id/new_app"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="25dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/history_icon"
@@ -143,19 +143,17 @@
                 android:id="@+id/textView15"
                 android:layout_width="100dp"
                 android:layout_height="39dp"
-                android:layout_marginEnd="35dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
                 android:singleLine="false"
                 android:text="NEW APPOINTMENT"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView17"
-                app:layout_constraintTop_toBottomOf="@+id/new_appointment"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="35dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/new_appointment" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -165,27 +163,27 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/textView6"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="4dp"
                 android:layout_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17"
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
                 app:srcCompat="@drawable/clinic_buildingicon"
                 android:layout_marginLeft="40dp" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="258dp"
-                android:layout_height="18dp"
+                android:layout_height="22dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="4dp"
                 android:layout_toEndOf="@+id/imageView2"
                 android:layout_toRightOf="@+id/imageView2"
                 android:layout_weight="1"
                 android:text="80 Rockland Drive  Haines City, FL 33844"
                 android:textStyle="italic"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView17"
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
                 android:layout_marginLeft="12dp" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
