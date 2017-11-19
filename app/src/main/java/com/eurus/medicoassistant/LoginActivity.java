@@ -62,8 +62,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-
         super.onCreate(savedInstanceState);
         sharedPreferences = getSharedPreferences(Utils.pref, MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -242,7 +240,7 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putString("phone", user.getPhoneNumber());
                                         editor.putString("uid", user.getUid());
                                         editor.commit();
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                                     }
                                 });
 

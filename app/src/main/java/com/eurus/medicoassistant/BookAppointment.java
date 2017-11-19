@@ -84,7 +84,6 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
     private static final String BUTTON_TEXT = "Call Google Calendar API";
-    private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {CalendarScopes.CALENDAR};
 
     private SharedPreferences sharedPreferences;
@@ -108,6 +107,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         toolbar = findViewById(R.id.toolbar);
         doctor_name = getIntent().getStringExtra("Name");
         toolbar.setTitle(doctor_name);
+        doctor_name = "Jennifer Wong";
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         calendarView = findViewById(R.id.calenderView);
@@ -310,7 +310,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         empty_text.setVisibility(View.GONE);
         already_booked_text.setVisibility(View.GONE);
         String batch = morning.isChecked() ? "Morning" : "Evening";
-        mRef.child("Booked Slots").child("Jennifer Wong").child(selected_date_str).child(batch).addValueEventListener(new ValueEventListener() {
+        mRef.child("Booked Slots").child(doctor_name).child(selected_date_str).child(batch).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("DS", dataSnapshot.toString());
@@ -365,8 +365,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
     private void chooseAccount() {
         if (EasyPermissions.hasPermissions(
                 this, android.Manifest.permission.GET_ACCOUNTS)) {
-            String accountName = getPreferences(Context.MODE_PRIVATE)
-                    .getString(PREF_ACCOUNT_NAME, null);
+            String accountName = sharedPreferences.getString("Account Name",null);
             if (accountName != null) {
                 mCredential.setSelectedAccountName(accountName);
                 getResultsFromApi();
@@ -406,11 +405,8 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
                     String accountName =
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
-                        SharedPreferences settings =
-                                getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString(PREF_ACCOUNT_NAME, accountName);
-                        editor.apply();
+                        editor.putString("Account Name", accountName);
+                        editor.commit();
                         mCredential.setSelectedAccountName(accountName);
                         getResultsFromApi();
                     }
@@ -528,6 +524,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
 
             String calendarId = "primary";
             event = mService.events().insert(calendarId, event).execute();
+            storeIDinAppointment(event.getId());
             System.out.printf("Event created: %s\n", event.getHtmlLink());
             return event.getHtmlLink();
         }
@@ -560,5 +557,26 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
                 Log.d("GoogleAuth","Request cancelled.");
             }
         }
+    }
+
+    private void storeIDinAppointment(final String calendar_id) {
+        mRef.child("Appointments").child(uid).orderByChild("Date").equalTo(selected_date_str).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("DS_CALID",dataSnapshot.toString());
+                for (DataSnapshot postDataSnapshot : dataSnapshot.getChildren()) {
+                    Log.d("DS_CALID_POS",dataSnapshot.toString());
+                    String name = postDataSnapshot.child("Doctor").getValue(String.class);
+                    if (name.equals(doctor_name)) {
+                        postDataSnapshot.getRef().child("Calendar ID").setValue(calendar_id);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

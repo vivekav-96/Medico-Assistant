@@ -77,6 +77,8 @@ public class UpcomingAppointmentFragment extends Fragment {
                     Log.d("DS",dataSnapshot.toString());
                     String date_str = postSnapshot.child("Date").getValue(String.class);
                     String timeSlot = postSnapshot.child("Time Slot").getValue(String.class);
+                    String timeOfDay = postSnapshot.child("Time of Day").getValue(String.class);
+
                     String date_time_str = date_str + " " + timeSlot;
                     try
                     {
@@ -88,6 +90,7 @@ public class UpcomingAppointmentFragment extends Fragment {
                             appointment.setDate(date_str);
                             appointment.setDoctor(doctor);
                             appointment.setTimeSlot(timeSlot);
+                            appointment.setTimeOfDay(timeOfDay);
                             appointment.setRemaining(String.valueOf(Utils.differenceInDaysBetweenDates(date_time,current_datetime)));
                             appointments.add(appointment);
                         }
