@@ -60,7 +60,7 @@ public class HistoryAppointmentFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressbar);
         empty_appointments = view.findViewById(R.id.empty_appointments_text);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AppointmentsListAdapter(appointments,AppointmentsListAdapter.APPOINTMENT_EXPIRED);
+        adapter = new AppointmentsListAdapter(appointments,AppointmentsListAdapter.APPOINTMENT_EXPIRED,getActivity(),uid);
         recyclerView.setAdapter(adapter);
         current_datetime = new Date();
         hour_minute_format = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
