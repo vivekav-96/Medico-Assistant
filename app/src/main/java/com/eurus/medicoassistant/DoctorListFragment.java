@@ -10,26 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DoctorListFragment extends Fragment {
 
-    private ArrayList<Doctor> doctorsList = new ArrayList<>();
+    private ArrayList<Doctor> doctorsList;
     private DoctorsListAdapter listAdapter;
+    private DoctorDetails doctorDetails;
     private RecyclerView doctorsListView;
-    private DatabaseReference ref;
-    private TextView textview;
-    ProgressBar progressbar;
+
     @Override
     public void onCreate(@NonNull  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,34 +37,14 @@ public class DoctorListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         doctorsListView= view.findViewById(R.id.doctorsListView);
-        textview = view.findViewById(R.id.no_docs_available_label);
-        progressbar = view.findViewById(R.id.progressbar);
-        ref=FirebaseDatabase.getInstance().getReference();
-        ref.child("doctor").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data: dataSnapshot.getChildren())
-                {
-                    Doctor temp=data.getValue(Doctor.class);
-                    Log.v(">>>>>",temp.getName());
-                    doctorsList.add(temp);
-                }
-                progressbar.setVisibility(View.GONE);
-                if(doctorsList.size()!=0){
-                    textview.setVisibility(View.GONE);
-                    listAdapter.notifyDataSetChanged();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        listAdapter=new DoctorsListAdapter(getActivity(), doctorsList);
-        doctorsListView.setAdapter(listAdapter);
-        doctorsListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        doctorDetails=new DoctorDetails();
+        doctorsList=doctorDetails.getDoctorsList();
+        Log.d("Doctors Count",""+ doctorsList.size());
+        if(doctorsList.size()!=0){
+            view.findViewById(R.id.no_docs_available_label).setVisibility(View.GONE);
+            listAdapter=new DoctorsListAdapter(getActivity(), doctorsList);
+            doctorsListView.setAdapter(listAdapter);
+            doctorsListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        }
     }
 }
