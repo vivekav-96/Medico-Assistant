@@ -68,8 +68,15 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(Utils.pref, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         if (sharedPreferences.contains("uid")) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+            if(sharedPreferences.contains("address")) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
+            else
+            {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
+            }
             return;
         }
         setContentView(R.layout.activity_login);

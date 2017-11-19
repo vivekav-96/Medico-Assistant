@@ -72,7 +72,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
     String selected_date_str;
     ProgressBar progressBar;
     Button submit;
-    TextView empty_text;
+    TextView empty_text, already_booked_text;
     String selected = "", uid;
 
     GoogleAccountCredential mCredential;
@@ -90,8 +90,9 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     static final long FIFTEEN_MINUTE_IN_MILLIS=900000;//millisecs
-    boolean isCalenderSelectedAsFirst = true;
+    boolean isCalenderSelectedAsFirst = true , alreadyBooked = true;
     private String current_date_str;
+    private String doctor_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +106,8 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         uid = sharedPreferences.getString("uid", "");
         mRef = FirebaseDatabase.getInstance().getReference();
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Jennifer Wong");
+        doctor_name = "Jennifer Wong";
+        toolbar.setTitle(doctor_name);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         calendarView = findViewById(R.id.calenderView);
@@ -114,13 +116,14 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         evening = findViewById(R.id.evening_radtobtn);
         progressBar = findViewById(R.id.progressbar);
         empty_text = findViewById(R.id.empty_text);
+        already_booked_text = findViewById(R.id.already_booked_text);
         submit = findViewById(R.id.submit_appointment_btn);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 selected_date_str = dayOfMonth + "-" + (month + 1) + "-" + year;
                 isCalenderSelectedAsFirst = current_date_str.equals(selected_date_str);
-                loadInitalData();
+                alreadyBookedOnDate(selected_date_str);
             }
         });
 
@@ -157,7 +160,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         current_date_str = selected_date_str = sdf.format(date);
 
         morning.setChecked(true);
-        loadInitalData();
+        alreadyBookedOnDate(current_date_str);
         int noOfDays = 14;
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
@@ -177,7 +180,6 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
                     Button ok = dialog.findViewById(R.id.btn_ok_dialog);
                     Button cancel = dialog.findViewById(R.id.btn_cancel_dialog);
                     dialog.show();
-                    final String doctor_name = toolbar.getTitle().toString();
                     name.setText(doctor_name);
                     final String batch = morning.isChecked() ? "Morning" : "Evening";
                     line.setText(selected_date_str + " " + batch + " " + selected);
@@ -220,6 +222,36 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
                 .setBackOff(new ExponentialBackOff());
     }
 
+    private void alreadyBookedOnDate(String selected_date_str) {
+        alreadyBooked = false;
+        mRef.child("Appointments").child(uid).orderByChild("Date").equalTo(selected_date_str).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot postDataSnapshot : dataSnapshot.getChildren())
+                {
+                    String doctor = postDataSnapshot.child("Doctor").getValue(String.class);
+                    if(doctor.equals(doctor_name))
+                        alreadyBooked = true;
+                }
+                if(!alreadyBooked)
+                    loadInitalData();
+                else
+                {
+                    already_booked_text.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    empty_text.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                    submit.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     private void loadSlots(DataSnapshot dataSnapshot) {
         slotList.clear();
@@ -242,6 +274,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
             submit.setVisibility(View.VISIBLE);
         } else {
             empty_text.setVisibility(View.VISIBLE);
+            submit.setVisibility(View.GONE);
         }
     }
 
@@ -261,9 +294,6 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
     private boolean isValidSlot(String slot) {
         try {
             Date date = hour_minute_format.parse(slot);
-            Log.d("DATE_CUR",current_datetime.toString());
-            Log.d("DATE_SLOT",date.toString());
-            Log.d("RESULT",date.after(current_datetime)+"");
             return date.after(current_datetime);
         }
         catch (ParseException e)
@@ -278,9 +308,8 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         empty_text.setVisibility(View.GONE);
+        already_booked_text.setVisibility(View.GONE);
         String batch = morning.isChecked() ? "Morning" : "Evening";
-        Log.d("Date", "Available Slots/Jennifer Wong/" + selected_date_str + batch);
-
         mRef.child("Booked Slots").child("Jennifer Wong").child(selected_date_str).child(batch).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -308,7 +337,8 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
                 morning.setChecked(false);
                 break;
         }
-        loadInitalData();
+        if(!alreadyBooked)
+            loadInitalData();
     }
 
 
@@ -479,8 +509,8 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
             // List the next 10 events from the primary calendar.
             final String batch = morning.isChecked() ? "Morning" : "Evening";
             Event event = new Event()
-                    .setSummary("Doctor's appointment with " + toolbar.getTitle())
-                    .setDescription("You have booked an appointment with " + toolbar.getTitle() + " on " + selected_date_str + " " +  selected);
+                    .setSummary("Doctor's appointment with " + doctor_name)
+                    .setDescription("You have booked an appointment with " + doctor_name+ " on " + selected_date_str + " " +  selected);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
             Date startDate = sdf.parse(selected_date_str + " " + selected);
             DateTime startDateTime = new DateTime(startDate);
