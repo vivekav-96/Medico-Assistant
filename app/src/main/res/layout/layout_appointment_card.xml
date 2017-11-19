@@ -20,25 +20,6 @@
             android:background="@color/cdocCardBg">
 
             <TextView
-                android:id="@+id/addPrescriptionTV"
-                android:layout_width="wrap_content"
-                android:layout_height="46dp"
-                android:layout_marginEnd="12dp"
-                android:background="@color/cdocCardBg"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:paddingTop="15dp"
-                android:text="ADD PRESCRIPTION"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/bookFollowUpTV"
-                app:layout_constraintTop_toBottomOf="@+id/textView24"
-                app:layout_constraintVertical_bias="0.555"
-                android:layout_marginRight="12dp" />
-
-            <TextView
                 android:id="@+id/dayOfWeekTV"
                 android:layout_width="95dp"
                 android:layout_height="29dp"

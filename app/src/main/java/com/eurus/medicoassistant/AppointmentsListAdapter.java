@@ -116,17 +116,8 @@ public class AppointmentsListAdapter extends Adapter<RecyclerView.ViewHolder> {
             dateTV = itemView.findViewById(R.id.dateTV);
             timeTV = itemView.findViewById(R.id.timeTV);
             dayOfWeekTV = itemView.findViewById(R.id.dayOfWeekTV);
-            addPrescriptionButton = itemView.findViewById(R.id.addPrescriptionTV);
             bookFollowUpButton = itemView.findViewById(R.id.bookFollowUpTV);
 
-            addPrescriptionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(activity,Temp.class);
-                    intent.putExtra("Name",appointments.get(getLayoutPosition()).getDoctor());
-                    activity.startActivity(intent);
-                }
-            });
             bookFollowUpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

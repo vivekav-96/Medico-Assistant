@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         switch (window){
             case HOME:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.dashboard_frag_lay, new HomeFragment())
+                        .replace(R.id.dashboard_frag_lay, new Home())
                         .commit();
                 /*
                     .replace(R.id.dashboard_base_lay, new HomeFragment())

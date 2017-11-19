@@ -1,21 +1,29 @@
 package com.eurus.medicoassistant;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.Inflater;
 
-public class Home extends AppCompatActivity {
+public class Home extends Fragment {
 
     private int remainingDays;
     private TextView text_remainingDaysTV;
     private TextView remainingDaysTV;
     private TextView text_daysTV;
+    private TextView default_text;
 
     private int calculateRemainingDays(String startDate, String endDate) throws ParseException
 
@@ -34,7 +42,9 @@ public class Home extends AppCompatActivity {
 
     private void setDisplayValues(int difference)
     {
+        default_text.setVisibility(View.GONE);
         String text_remainingDays="", remainingDays="", text_days="";
+
         switch (difference)
         {
             case 0: text_remainingDays="YOUR APPOINTMENT IS";
@@ -58,20 +68,32 @@ public class Home extends AppCompatActivity {
         text_daysTV.setText(text_days);
     }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        text_remainingDaysTV=findViewById(R.id.text_remainingDaysTV);
-        remainingDaysTV=findViewById(R.id.remaingDaysTV);
-        text_daysTV=findViewById(R.id.text_daysTV);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //setContentView(R.layout.activity_home);
+        Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
+        //getActivity().setSupportActionBar(toolbar);
+
+        text_remainingDaysTV=(view.findViewById(R.id.text_remainingDaysTV));
+        remainingDaysTV=view.findViewById(R.id.remaingDaysTV);
+        default_text=view.findViewById(R.id.text_default);
+        text_daysTV=view.findViewById(R.id.text_daysTV);
         try {
-            setDisplayValues(calculateRemainingDays("",""));
+            setDisplayValues(calculateRemainingDays("2017 11 19","2017 11 21"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
-
 }
