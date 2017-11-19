@@ -41,6 +41,7 @@ public class DoctorListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         ((MainActivity)getActivity()).getTabLayout().setVisibility(View.GONE);
         return inflater.inflate(R.layout.activity_doctor_list, container, false);
     }
