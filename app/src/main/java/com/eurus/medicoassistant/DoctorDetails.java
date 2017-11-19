@@ -22,7 +22,7 @@ public class DoctorDetails {
     private ArrayList<Doctor> doctorDetails;
 
 
-    public ArrayList<Doctor> getDoctorDetails() {
+    public ArrayList<Doctor> getDoctorsList() {
         return doctorDetails;
     }
 

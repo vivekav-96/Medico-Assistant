@@ -18,9 +18,10 @@
         android:layout_margin="5dp"/>
 
     <TextView
+        android:id="@+id/no_docs_available_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Doctors"
+        android:text="No Doctors Available"
         android:gravity="center"
         android:layout_centerInParent="true"/>
 </RelativeLayout>
