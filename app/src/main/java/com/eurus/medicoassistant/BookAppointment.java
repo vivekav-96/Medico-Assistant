@@ -106,7 +106,7 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         uid = sharedPreferences.getString("uid", "");
         mRef = FirebaseDatabase.getInstance().getReference();
         toolbar = findViewById(R.id.toolbar);
-        doctor_name = "Jennifer Wong";
+        doctor_name = getIntent().getStringExtra("Name");
         toolbar.setTitle(doctor_name);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

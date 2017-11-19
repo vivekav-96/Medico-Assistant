@@ -42,9 +42,5 @@ public class DoctorListFragment extends Fragment {
         doctorsList=doctorDetails.getDoctorDetails();
         listAdapter=new DoctorsListAdapter(getActivity(), doctorsList);
         doctorsListView.setAdapter(listAdapter);
-        //progressBar=findViewById(R.id.doctorsListProgressBar);
-        // progressBar.setVisibility(View.VISIBLE);
-
-        //progressBar.setVisibility(View.GONE);
     }
 }
