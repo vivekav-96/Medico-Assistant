@@ -41,6 +41,8 @@
             android:theme="@style/AppTheme">
             >
         </activity>
+        <activity android:name=".RegisterActivity"
+            android:noHistory="true"/>
     </application>
 
 </manifest>
