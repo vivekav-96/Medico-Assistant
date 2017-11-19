@@ -10,6 +10,8 @@ public class Appointment {
     private String doctor;
     private String timeSlot;
     private String timeOfDay;
+    private String remaining;
+    private String dayOfWeek;
 
 
     public String getDate() {
@@ -42,6 +44,22 @@ public class Appointment {
 
     public String getTimeOfDay() {
         return timeOfDay;
+    }
+
+    public String getRemaining() {
+        return remaining;
+    }
+
+    public void setRemaining(String remaining) {
+        this.remaining = remaining;
+    }
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 }
 

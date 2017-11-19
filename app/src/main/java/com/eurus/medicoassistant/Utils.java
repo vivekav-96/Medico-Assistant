@@ -1,6 +1,7 @@
 package com.eurus.medicoassistant;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,5 +51,37 @@ public class Utils {
         long curTimeInMs = beforeTime.getTime();
         Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
         return afterAddingMins;
+    }
+
+    public static int differenceInDaysBetweenDates(Date d1,Date d2)
+    {
+        int diffInDays = (int) ((d1.getTime() - d2.getTime()) / (1000 * 60 * 60 * 24));
+        return Math.abs(diffInDays);
+    }
+
+    public static String getDayofWeek(Date date)
+    {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        switch (dayOfWeek)
+        {
+            case 1:
+                return "Sunday";
+            case 2:
+                return "Monday";
+            case 3:
+                return "Tuesday";
+            case 4:
+                return "Wednesday";
+            case 5:
+                return "Thursday";
+            case 6:
+                return "Friday";
+            case 7:
+                return "Saturday";
+            default:
+                return "";
+        }
     }
 }
