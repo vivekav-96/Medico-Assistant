@@ -6,19 +6,16 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.roughike.bottombar.OnTabSelectListener;
-
 public class MainActivity extends AppCompatActivity {
     enum Window{HOME, DOCTORS, APPOINTMENTS}
 
-    FloatingActionButton fab_book_app;
+    FloatingActionButton fabBookApp;
     BottomNavigationView bottomBar;
     Toolbar toolbar;
     FragmentManager fragmentManager;
@@ -35,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Medico-Assistant");
 
-        fab_book_app = findViewById(R.id.fab_action);
-        fab_book_app.setOnClickListener(new View.OnClickListener() {
+        fabBookApp = findViewById(R.id.fab_action);
+        fabBookApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this,BookAppointment.class);
@@ -88,5 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
     public TabLayout getTabLayout(){
         return findViewById(R.id.tab_layout);
+    }
+
+    public FloatingActionButton getFabBookApp() {
+        return fabBookApp;
     }
 }

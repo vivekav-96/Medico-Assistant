@@ -33,8 +33,11 @@ public class AppointmentsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         pager = view.findViewById(R.id.appointment_pager);
+
         tabLayout = ((MainActivity)getActivity()).getTabLayout();
         tabLayout.setVisibility(View.VISIBLE);
+        ((MainActivity)getActivity()).getFabBookApp().setVisibility(View.INVISIBLE);
+
         adapter = new TabPagerAdapter(this.getChildFragmentManager());
         adapter.addFragment(new UpcomingAppointmentFragment(), getString(R.string.upcoming));
         adapter.addFragment(new HistoryAppointmentFragment(), getString(R.string.history));
