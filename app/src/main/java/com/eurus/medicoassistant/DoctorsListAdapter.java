@@ -1,7 +1,9 @@
 package com.eurus.medicoassistant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
 
     private ArrayList<Doctor> doctors;
     private Context context;
+    private TextView bookAppointmentTV;
 
     DoctorsListAdapter(Context context, ArrayList<Doctor> doctorsList) {
         this.context=context;
@@ -62,13 +65,23 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
             specialityTV=view.findViewById(R.id.specialityTV);
             emailTV=view.findViewById(R.id.emailTV);
             displayPic=view.findViewById(R.id.docProfileImageView);
+            bookAppointmentTV=view.findViewById(R.id.bookAnAppointmentButton);
         }
 
-        void setDoctorDetails(Doctor doctor) {
-            doctorNameTV.setText(doctor.getName());
+        void setDoctorDetails(final Doctor doctor) {
+
+            doctorNameTV.setText("Dr. "+doctor.getName());
             qualificationsTV.setText(doctor.getQualifications());
             specialityTV.setText(doctor.getSpeciality());
             emailTV.setText(doctor.getEmail());
+            bookAppointmentTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i=new Intent(context, BookAppointment.class);
+                    i.putExtra("Name", doctor.getName());
+                    context.startActivity(i);
+                }
+            });
             Glide.with(context).load(doctor.getImgurl()).into(displayPic);
         }
     }

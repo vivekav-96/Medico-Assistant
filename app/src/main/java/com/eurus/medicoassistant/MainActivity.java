@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomBar;
     Toolbar toolbar;
     FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Medico-Assistant");
 
-        fabBookApp = findViewById(R.id.fab_action);
-        fabBookApp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,BookAppointment.class);
-                startActivity(i);
-            }
-        });
+
 
         bottomBar = findViewById(R.id.bottomNavigationView);
         bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,7 +78,5 @@ public class MainActivity extends AppCompatActivity {
         return findViewById(R.id.tab_layout);
     }
 
-    public FloatingActionButton getFabBookApp() {
-        return fabBookApp;
-    }
+
 }

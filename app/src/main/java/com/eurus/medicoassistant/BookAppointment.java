@@ -107,7 +107,6 @@ public class BookAppointment extends AppCompatActivity implements RadioButton.On
         toolbar = findViewById(R.id.toolbar);
         doctor_name = getIntent().getStringExtra("Name");
         toolbar.setTitle(doctor_name);
-        doctor_name = "Jennifer Wong";
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         calendarView = findViewById(R.id.calenderView);

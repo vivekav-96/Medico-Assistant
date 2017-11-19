@@ -36,7 +36,6 @@ public class AppointmentsFragment extends Fragment {
 
         tabLayout = ((MainActivity)getActivity()).getTabLayout();
         tabLayout.setVisibility(View.VISIBLE);
-        ((MainActivity)getActivity()).getFabBookApp().setVisibility(View.INVISIBLE);
 
         adapter = new TabPagerAdapter(this.getChildFragmentManager());
         adapter.addFragment(new UpcomingAppointmentFragment(), getString(R.string.upcoming));
