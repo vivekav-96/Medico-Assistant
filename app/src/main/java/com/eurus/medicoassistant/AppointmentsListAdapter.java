@@ -90,7 +90,7 @@ public class AppointmentsListAdapter extends Adapter<RecyclerView.ViewHolder> {
     public class UpComingHolder extends RecyclerView.ViewHolder {
 
         TextView doctorTV,dateTV,timeTV,remainingTV;
-        Button cancel;
+        TextView cancel;
         public UpComingHolder(View itemView) {
             super(itemView);
             doctorTV = itemView.findViewById(R.id.doctorTV);
@@ -109,15 +109,15 @@ public class AppointmentsListAdapter extends Adapter<RecyclerView.ViewHolder> {
 
     public class HistoryHolder extends RecyclerView.ViewHolder {
         TextView doctorTV,dateTV,timeTV,dayOfWeekTV;
-        Button addPrescriptionButton,bookFollowUpButton;
+        TextView addPrescriptionButton,bookFollowUpButton;
         public HistoryHolder(final View itemView) {
             super(itemView);
             doctorTV = itemView.findViewById(R.id.doctorTV);
             dateTV = itemView.findViewById(R.id.dateTV);
             timeTV = itemView.findViewById(R.id.timeTV);
             dayOfWeekTV = itemView.findViewById(R.id.dayOfWeekTV);
-            addPrescriptionButton = itemView.findViewById(R.id.addPrescriptionButton);
-            bookFollowUpButton = itemView.findViewById(R.id.bookFollowUpButton);
+            addPrescriptionButton = itemView.findViewById(R.id.addPrescriptionTV);
+            bookFollowUpButton = itemView.findViewById(R.id.bookFollowUpTV);
 
             addPrescriptionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
