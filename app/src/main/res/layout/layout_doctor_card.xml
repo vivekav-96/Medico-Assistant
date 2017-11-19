@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="181dp">
 
 
@@ -25,7 +25,8 @@
                 android:textColor="@color/specialityRed."
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/docProfileImageView"
-                app:layout_constraintTop_toBottomOf="@+id/doctorTV" />
+                app:layout_constraintTop_toBottomOf="@+id/doctorTV"
+                android:layout_marginLeft="32dp" />
 
             <TextView
                 android:id="@+id/doctorTV"
@@ -37,7 +38,8 @@
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 app:layout_constraintStart_toEndOf="@+id/docProfileImageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="32dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/docProfileImageView"
@@ -61,22 +63,21 @@
                 android:layout_marginEnd="16dp"
                 android:background="@color/docCardBg"
                 android:paddingBottom="10dp"
-                android:paddingTop="15dp"
+                android:paddingTop="13dp"
                 android:text="BOOK AN APPOINTMENT"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_red_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
-                app:layout_constraintVertical_bias="0.1" />
+                app:layout_constraintVertical_bias="0.1"
+                android:layout_marginRight="16dp" />
 
             <TextView
                 android:id="@+id/textView5"
-                android:layout_width="384dp"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginBottom="44dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:background="@color/line"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -93,7 +94,8 @@
                 android:textSize="11sp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/docProfileImageView" />
+                app:layout_constraintTop_toBottomOf="@+id/docProfileImageView"
+                android:layout_marginLeft="16dp" />
 
             <TextView
                 android:id="@+id/emailTV"
@@ -120,7 +122,8 @@
                 app:layout_constraintStart_toEndOf="@+id/docProfileImageView"
                 app:layout_constraintTop_toBottomOf="@+id/specialityTV"
                 app:layout_constraintVertical_bias="0.0"
-                tools:targetApi="lollipop" />
+                tools:targetApi="lollipop"
+                android:layout_marginLeft="32dp" />
 
         </android.support.constraint.ConstraintLayout>
 
