@@ -28,7 +28,7 @@ public class AppointmentsListAdapter extends Adapter<AppointmentsListAdapter.App
                 .inflate(R.layout.layout_appointment_upcoming_card, parent, false));
         else if(viewType == APPOINTMENT_EXPIRED)
             return new AppointmentHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_appointment_history_card, parent, false));
+                .inflate(R.layout.layout_appointment_card, parent, false));
         return null;
     }
 
