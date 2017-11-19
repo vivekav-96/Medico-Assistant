@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class DoctorListFragment extends Fragment {
         doctorsListView= view.findViewById(R.id.doctorsListView);
         doctorDetails=new DoctorDetails();
         doctorsList=doctorDetails.getDoctorsList();
+        Log.d("Doctors Count",""+ doctorsList.size());
         if(doctorsList.size()!=0){
             view.findViewById(R.id.no_docs_available_label).setVisibility(View.GONE);
             listAdapter=new DoctorsListAdapter(getActivity(), doctorsList);

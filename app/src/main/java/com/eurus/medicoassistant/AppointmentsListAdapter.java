@@ -14,21 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventDateTime;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,12 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Sachin on 19-11-2017.
@@ -73,7 +63,7 @@ public class AppointmentsListAdapter extends Adapter<RecyclerView.ViewHolder> {
                 .setBackOff(new ExponentialBackOff());
         String accountName = activity.getSharedPreferences(Utils.pref,Context.MODE_PRIVATE)
                 .getString("Account Name", null);
-        Log.d("AccountName",accountName);
+        Log.d("AccountName",""+accountName);
         mCredential.setSelectedAccountName(accountName);
         mProgress = new ProgressDialog(activity);
         mProgress.setTitle("Cancelling the Appointment");

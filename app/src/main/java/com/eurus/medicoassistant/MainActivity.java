@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         switch (window){
             case HOME:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.dashboard_frag_lay, new Home())
+                        .replace(R.id.dashboard_frag_lay, new HomeFragment())
                         .commit();
                 break;
             case APPOINTMENTS:
