@@ -106,7 +106,7 @@ public class UpcomingAppointmentFragment extends Fragment {
                 }
                 else
                 {
-                    empty_appointments.setText(View.VISIBLE);
+                    empty_appointments.setVisibility(View.VISIBLE);
                 }
             }
 
