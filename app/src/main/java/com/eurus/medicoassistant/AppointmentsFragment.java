@@ -35,7 +35,7 @@ public class AppointmentsFragment extends Fragment {
         pager = view.findViewById(R.id.appointment_pager);
         tabLayout = ((MainActivity)getActivity()).getTabLayout();
         tabLayout.setVisibility(View.VISIBLE);
-        adapter = new TabPagerAdapter(getFragmentManager());
+        adapter = new TabPagerAdapter(this.getChildFragmentManager());
         adapter.addFragment(new UpcomingAppointmentFragment(), getString(R.string.upcoming));
         adapter.addFragment(new HistoryAppointmentFragment(), getString(R.string.history));
         pager.setAdapter(adapter);
